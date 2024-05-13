@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerWalking : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerWalking : MonoBehaviour
     private float MoveForce = 1.0f;
     [SerializeField]
     private float JumpForce = 10.0f;
+    [SerializeField]
+    public Checkpoint RespawnPoint = null;
 
     private Rigidbody rb = null;
     private bool onGround = false;
@@ -28,6 +31,14 @@ public class PlayerWalking : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (transform.position.y < -20.0f)
+            if (RespawnPoint != null)
+                transform.position =
+                    RespawnPoint.transform.position +
+                    new Vector3(0.0f, (RespawnPoint.transform.localScale.y + transform.localScale.y) * 0.5f, 0.0f);
+            else
+                SceneManager.LoadScene(0);
+
         float forward = Input.GetKey(KeyCode.W) ? 1.0f : 0.0f;
         float backward = Input.GetKey(KeyCode.S) ? -1.0f : 0.0f;
         float left = Input.GetKey(KeyCode.A) ? -1.0f : 0.0f;

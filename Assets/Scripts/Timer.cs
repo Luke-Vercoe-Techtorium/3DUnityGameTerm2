@@ -18,6 +18,7 @@ public class Timer : MonoBehaviour
 
     public void Update()
     {
-        text.text = (Time.time - startTime).ToString("0.00") + "s";
+        var time = Time.time - startTime;
+        text.text = time.ToString("0.00");
     }
 }

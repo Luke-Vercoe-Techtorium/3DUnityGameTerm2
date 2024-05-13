@@ -25,9 +25,7 @@ public class CameraController : MonoBehaviour
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
+            SceneManager.LoadScene(0);
 
         float lookVertical = Input.GetAxisRaw("Mouse Y");
         cam.transform.rotation = Quaternion.AngleAxis(lookVertical * LookSpeed, -cam.transform.right) * cam.transform.rotation;

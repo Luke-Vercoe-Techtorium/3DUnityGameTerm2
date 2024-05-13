@@ -39,10 +39,13 @@ public class PlayerWalking : MonoBehaviour
         float backward = Input.GetKey(KeyCode.S) ? -1.0f : 0.0f;
         float left = Input.GetKey(KeyCode.A) ? -1.0f : 0.0f;
         float right = Input.GetKey(KeyCode.D) ? 1.0f : 0.0f;
+        float a = Input.GetKey(KeyCode.Q) ? -1.0f : 0.0f;
+        float b = Input.GetKey(KeyCode.E) ? 1.0f : 0.0f;
 
         Vector3 moveDirection =
             (forward + backward) * cam.transform.right +
-            (left + right) * -cam.transform.forward;
+            (left + right) * -cam.transform.forward +
+            (a + b) * cam.transform.up;
 
         rb.AddTorque(moveDirection.normalized * MoveForce, ForceMode.Force);
     }

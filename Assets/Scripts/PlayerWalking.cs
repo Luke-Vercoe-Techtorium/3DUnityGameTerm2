@@ -9,7 +9,6 @@ public class PlayerWalking : MonoBehaviour
     private float MoveForce = 1.0f;
     [SerializeField]
     private float JumpForce = 10.0f;
-    [SerializeField]
     public Checkpoint RespawnPoint = null;
 
     private Rigidbody rb = null;
@@ -18,15 +17,6 @@ public class PlayerWalking : MonoBehaviour
     public void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    public void Update()
-    {
-        if (onGround && Input.GetKeyDown(KeyCode.Space))
-        {
-            onGround = false;
-            rb.AddForce(cam.transform.up * JumpForce, ForceMode.VelocityChange);
-        }
     }
 
     public void FixedUpdate()
@@ -38,6 +28,12 @@ public class PlayerWalking : MonoBehaviour
                     new Vector3(0.0f, (RespawnPoint.transform.localScale.y + transform.localScale.y) * 0.5f, 0.0f);
             else
                 SceneManager.LoadScene(0);
+
+        if (onGround && Input.GetKey(KeyCode.Space))
+        {
+            onGround = false;
+            rb.AddForce(cam.transform.up * JumpForce, ForceMode.VelocityChange);
+        }
 
         float forward = Input.GetKey(KeyCode.W) ? 1.0f : 0.0f;
         float backward = Input.GetKey(KeyCode.S) ? -1.0f : 0.0f;
@@ -51,12 +47,12 @@ public class PlayerWalking : MonoBehaviour
         rb.AddTorque(moveDirection.normalized * MoveForce, ForceMode.Force);
     }
 
-    public void OnTriggerStay()
+    public void OnCollisionStay()
     {
         onGround = true;
     }
 
-    public void OnTriggerExit()
+    public void OnCollisionExit()
     {
         onGround = false;
     }

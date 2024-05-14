@@ -23,9 +23,15 @@ public class PlayerWalking : MonoBehaviour
     {
         if (transform.position.y < -20.0f)
             if (RespawnPoint != null)
-                transform.position =
-                    RespawnPoint.transform.position +
-                    new Vector3(0.0f, (RespawnPoint.transform.localScale.y + transform.localScale.y) * 0.5f, 0.0f);
+            {
+                transform.SetPositionAndRotation(
+                    RespawnPoint.transform.position
+                    + new Vector3(0.0f, (RespawnPoint.transform.localScale.y + transform.localScale.y) * 0.5f, 0.0f),
+                    Quaternion.identity
+                );
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
             else
                 SceneManager.LoadScene(0);
 

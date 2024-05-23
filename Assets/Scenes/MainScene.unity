@@ -2072,7 +2072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1281370334}
   m_Layer: 0
-  m_Name: FourthPlatform
+  m_Name: CannonBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2832,7 +2832,7 @@ GameObject:
   - component: {fileID: 2094245959}
   - component: {fileID: 2094245958}
   m_Layer: 0
-  m_Name: FithPlatform
+  m_Name: FourthPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3273,7 +3273,6 @@ SceneRoots:
   - {fileID: 900185296}
   - {fileID: 2036004568}
   - {fileID: 1102634454}
-  - {fileID: 1281370334}
   - {fileID: 2094245961}
   - {fileID: 1640819397}
   - {fileID: 1366572873}
@@ -3282,3 +3281,4 @@ SceneRoots:
   - {fileID: 968926586}
   - {fileID: 728504715}
   - {fileID: 2144736325}
+  - {fileID: 1281370334}

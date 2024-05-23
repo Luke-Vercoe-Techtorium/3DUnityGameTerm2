@@ -8,11 +8,7 @@ public class Checkpoint : MonoBehaviour
             if (player.RespawnPoint != this)
             {
                 player.RespawnPoint = this;
-                // TODO: reset lives
-            }
-            else
-            {
-                // TODO: subtract lives
+                player.Lives = player.MaxLives;
             }
     }
 }

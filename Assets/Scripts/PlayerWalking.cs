@@ -10,6 +10,9 @@ public class PlayerWalking : MonoBehaviour
     [SerializeField]
     private float JumpForce = 10.0f;
     public Checkpoint RespawnPoint = null;
+    public int MaxLives = 3;
+    [HideInInspector]
+    public int Lives = 0;
 
     private Rigidbody rb = null;
     private bool onGround = false;
@@ -22,7 +25,7 @@ public class PlayerWalking : MonoBehaviour
     public void FixedUpdate()
     {
         if (transform.position.y < -20.0f)
-            if (RespawnPoint != null)
+            if (RespawnPoint != null && Lives > 0)
             {
                 transform.SetPositionAndRotation(
                     RespawnPoint.transform.position
@@ -31,6 +34,7 @@ public class PlayerWalking : MonoBehaviour
                 );
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
+                Lives -= 1;
             }
             else
                 SceneManager.LoadScene(0);

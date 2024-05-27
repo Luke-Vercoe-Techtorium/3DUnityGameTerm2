@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
     private GameObject Player;
+    [SerializeField]
+    private GameObject PauseMenu;
     [SerializeField]
     private GameObject cam;
     [SerializeField]
@@ -14,6 +15,7 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Time.timeScale = 1.0f;
     }
 
     public void OnDisable()
@@ -24,31 +26,50 @@ public class CameraController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(0);
-
-        float lookVertical = Input.GetAxisRaw("Mouse Y");
-        cam.transform.rotation = Quaternion.AngleAxis(lookVertical * LookSpeed, -cam.transform.right) * cam.transform.rotation;
-
-        float lookHorizontal = Input.GetAxisRaw("Mouse X");
-        transform.SetPositionAndRotation(
-            Player.transform.position,
-            Quaternion.AngleAxis(lookHorizontal * LookSpeed, transform.up) * transform.rotation
-        );
-
-        var distance = 5.0f;
-        if (Physics.Raycast(
-            cam.transform.position,
-            -cam.transform.forward,
-            out var hitInfo
-        ))
+        if (PauseMenu.activeInHierarchy)
         {
-            distance = Mathf.Min(
-                hitInfo.distance
-                    - Camera.main.nearClipPlane / Vector3.Dot(cam.transform.forward, hitInfo.normal),
-                distance
-            );
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1.0f;
+                return;
+            }
         }
-        cam.transform.localScale = new(cam.transform.localScale.x, cam.transform.localScale.y, distance);
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0.0f;
+            }
+
+            float lookVertical = Input.GetAxisRaw("Mouse Y");
+            cam.transform.rotation = Quaternion.AngleAxis(lookVertical * LookSpeed, -cam.transform.right) * cam.transform.rotation;
+
+            float lookHorizontal = Input.GetAxisRaw("Mouse X");
+            transform.SetPositionAndRotation(
+                Player.transform.position,
+                Quaternion.AngleAxis(lookHorizontal * LookSpeed, transform.up) * transform.rotation
+            );
+
+            var distance = 5.0f;
+            if (Physics.Raycast(
+                cam.transform.position,
+                -cam.transform.forward,
+                out var hitInfo
+            ))
+            {
+                distance = Mathf.Min(
+                    hitInfo.distance
+                        - Camera.main.nearClipPlane / Vector3.Dot(cam.transform.forward, hitInfo.normal),
+                    distance
+                );
+            }
+            cam.transform.localScale = new(cam.transform.localScale.x, cam.transform.localScale.y, distance);
+        }
     }
 }

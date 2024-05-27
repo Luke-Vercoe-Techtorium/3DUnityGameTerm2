@@ -16,6 +16,6 @@ public class SwingingArm : MonoBehaviour
 
     public void FixedUpdate()
     {
-        rb.MoveRotation(Quaternion.AngleAxis(Speed * Time.time, Vector3.forward));
+        rb.MoveRotation(Quaternion.AngleAxis(Speed * Time.fixedTime, Vector3.forward));
     }
 }

@@ -16,7 +16,7 @@ public class Piston : MonoBehaviour
 
     public void FixedUpdate()
     {
-        float value = Mathf.Sin(Time.time * Speed + Offset);
+        float value = Mathf.Sin(Time.fixedTime * Speed + Offset);
         PistonArm.MovePosition(transform.position + new Vector3(value * MoveDistance, 0.0f, 0.0f));
     }
 }

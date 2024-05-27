@@ -13,12 +13,12 @@ public class Timer : MonoBehaviour
 
     public void Start()
     {
-        startTime = Time.time;
+        startTime = Time.fixedTime;
     }
 
     public void Update()
     {
-        var time = Time.time - startTime;
+        var time = Time.fixedTime - startTime;
         text.text = time.ToString("0.00");
     }
 }

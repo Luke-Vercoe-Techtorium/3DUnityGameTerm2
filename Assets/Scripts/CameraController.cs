@@ -13,9 +13,7 @@ public class CameraController : MonoBehaviour
 
     public void OnEnable()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        Time.timeScale = 1.0f;
+        UnPause();
     }
 
     public void OnDisable()
@@ -24,28 +22,33 @@ public class CameraController : MonoBehaviour
         Cursor.visible = true;
     }
 
+    private void Pause()
+    {
+        PauseMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0.0f;
+    }
+
+    private void UnPause()
+    {
+        PauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1.0f;
+    }
+
     public void Update()
     {
         if (PauseMenu.activeInHierarchy)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                Time.timeScale = 1.0f;
-                return;
-            }
+                UnPause();
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu.SetActive(true);
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                Time.timeScale = 0.0f;
-            }
+                Pause();
 
             float lookVertical = Input.GetAxisRaw("Mouse Y");
             cam.transform.rotation = Quaternion.AngleAxis(lookVertical * LookSpeed, -cam.transform.right) * cam.transform.rotation;
